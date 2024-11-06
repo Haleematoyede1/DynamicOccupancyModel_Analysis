@@ -4,7 +4,7 @@
 
 # Install required Packages
 #install.packages("remotes")
-#remotes::install_github("AfricaBirdData/ABAP")
+#remotes::install_github("African/ABAP")
 
 # Load required libraries
 library(ABAP)
@@ -29,8 +29,9 @@ dc_01 <- dc_01 %>%
 sum(is.na(dc_01))#checking for any missing values
 dc_01 <- dc_01 %>%
   as.data.frame() %>%
-  mutate(Sequence = ifelse(Sequence == '-', 0, as.numeric(Sequence)))#converting the sequence column to numeric
-summary(dc_01)#summary of the data set
+  mutate(Sequence = ifelse(Sequence == '-', 0, as.numeric(Sequence)))%>%#converting the sequence column to numeric
+  rename(TotalSpecies = Sequence)
+#summary(dc_01)#summary of the data set
 
 ### Investigating protocols that do not meet the  requirement for standard protocol-------------------------
 library(dplyr)
@@ -62,13 +63,19 @@ get_season <- function(date) {
 }# Function to group protocols into seasons
 
 dc_01$Season <- sapply(dc_01$StartDate, get_season)#new column for the season
-summary(dc_01)#summary of the data set
+#summary(dc_01)#summary of the data set
 
 ### Create latitude and longitude columns--------------------------------------------
 dc_01$Latitude <- -(as.numeric(substr(dc_01$Pentad, 1, 2)) + (as.numeric(substr(dc_01$Pentad, 3, 4)) + 2.5) / 60)
 dc_01$Longitude <- (as.numeric(substr(dc_01$Pentad, 6, 7)) + (as.numeric(substr(dc_01$Pentad, 8, 9)) + 2.5) / 60)
+#summary(dc_01)#summary of the data set
 
 
+
+
+
+
+#########################################################################
 library(dplyr)
 library(lubridate)
 
@@ -84,3 +91,4 @@ head(test)
 (Surv_hist <- table(test$Pentad,test$Season))  ##to see how many visits in each pentad in the different season
 (Max_surv <- apply(Surv_hist,2,max))                      ###The maximum number of visits in each season for individual pentads
 sum(Max_surv)
+summary(Max_surv)
