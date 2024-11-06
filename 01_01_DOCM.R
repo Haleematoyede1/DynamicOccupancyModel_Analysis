@@ -69,7 +69,7 @@ dc_01$Season <- sapply(dc_01$StartDate, get_season)#new column for the season
 dc_01$Latitude <- -(as.numeric(substr(dc_01$Pentad, 1, 2)) + (as.numeric(substr(dc_01$Pentad, 3, 4)) + 2.5) / 60)
 dc_01$Longitude <- (as.numeric(substr(dc_01$Pentad, 6, 7)) + (as.numeric(substr(dc_01$Pentad, 8, 9)) + 2.5) / 60)
 #summary(dc_01)#summary of the data set
-
+summary(dc_01)
 
 
 
